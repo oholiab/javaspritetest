@@ -1,6 +1,7 @@
 package com.prontab.goddamn;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
 
 public class GodDamn extends BasicGame {
   
@@ -18,22 +19,33 @@ public class GodDamn extends BasicGame {
       e.printStackTrace();
     }
 }
-
-  @Override
-  public void render(GameContainer arg0, Graphics arg1) throws SlickException {
-    // TODO Auto-generated method stub
+  
+  Matt matt;
+  
+  public void init(GameContainer c) throws SlickException {
+    matt = new Matt(50, 50);
     
   }
-
-  @Override
-  public void init(GameContainer arg0) throws SlickException {
-    // TODO Auto-generated method stub
-    
+  
+  public void render(GameContainer c, Graphics g) throws SlickException {
+    g.setColor(Color.white);
+    g.fill(new Rectangle(0, 0, 640, 480));
+    matt.draw();
   }
 
-  @Override
-  public void update(GameContainer arg0, int arg1) throws SlickException {
-    // TODO Auto-generated method stub
-    
+  public void update(GameContainer c, int delta) throws SlickException {
+    Input input = c.getInput();
+    if (input.isKeyDown(Input.KEY_ESCAPE)) {
+      c.exit();
+    }
+    if (input.isKeyDown(Input.KEY_S)) {
+      matt.stand();
+    }
+    if (input.isKeyDown(Input.KEY_Q)) {
+      matt.shrug();
+    }
+    if (input.isKeyDown(Input.KEY_T)) {
+      matt.talk();
+    }
   }
 }
