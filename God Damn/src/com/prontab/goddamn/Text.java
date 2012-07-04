@@ -41,16 +41,17 @@ public class Text {
     time = 0;
   }
   
-  public void update(int delta){
+  public boolean update(int delta){
     if(printline.length() == line.length()){
-      return;
+      return false;
     }
     time += delta;
     if (time >= updatefreq){
       time = 0;
       printline = printline + line.charAt(lineindex);
       lineindex++;
-    }
+    }      
+    return true;
   }
   
   public void draw(Graphics g){
