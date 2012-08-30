@@ -42,7 +42,7 @@ public class Text {
     time = 0;
   }
   
-  private int[] textoffset(int x, int y, int length, int spritewidth){
+  private int[] textoffset(int x, int y, int length, int height, int spritewidth){
     int[] offset = new int[2];
     int centrex = Global.winx / 2;
     int centrey = Global.winy / 2;
@@ -50,6 +50,14 @@ public class Text {
       offset[0] = -length - Global.padding;
     } else {
       offset[0] = spritewidth + Global.padding;
+    }
+    if (y <= 0){
+      offset[1] = -y + Global.padding;
+    } else {
+      int overlap = height + y - Global.winy;
+      if (overlap > 0) {
+        offset[1] = -overlap - Global.padding;
+      }
     }
     offset[1] = - Global.padding;
     return offset;
