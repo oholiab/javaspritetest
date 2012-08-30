@@ -29,6 +29,8 @@ public class Action {
     sheet = new SpriteSheet("assets/sprites/matt.png", 77, 123, 5);
 
   }
+  // TODO: create queue array for queuing next action
+  // TODO: create animation padding so spoken text hangs around for a while and animation continues
   public void update(int x, int y, int delta){
     if (speech.update(x, y, delta)){
       anim.update(delta);
