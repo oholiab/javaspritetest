@@ -42,6 +42,19 @@ public class Text {
     time = 0;
   }
   
+  private int[] textoffset(int x, int y, int length, int spritewidth){
+    int[] offset = new int[2];
+    int centrex = Global.winx / 2;
+    int centrey = Global.winy / 2;
+    if (x > centrex){
+      offset[0] = -length - Global.padding;
+    } else {
+      offset[0] = spritewidth + Global.padding;
+    }
+    offset[1] = - Global.padding;
+    return offset;
+  }
+  
   public boolean update(int x, int y, int delta){
     posx = x + shiftx;
     posy = y + shifty;

@@ -2,6 +2,7 @@ package com.prontab.goddamn;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
+import com.prontab.goddamn.Global;
 
 // Game class
 public class GodDamn extends BasicGame {
@@ -14,7 +15,7 @@ public class GodDamn extends BasicGame {
   public static void main(String[] arguments) {
     try {
       AppGameContainer app = new AppGameContainer(new GodDamn());
-      app.setDisplayMode(640, 480, false);
+      app.setDisplayMode(Global.winx, Global.winy, false);
       app.start();
     }
     catch (SlickException e) {
@@ -54,6 +55,9 @@ public class GodDamn extends BasicGame {
     }
     if (input.isKeyPressed(Input.KEY_M)) {
       matt.posx +=30;
+    }
+    if (input.isKeyPressed(Input.KEY_N)) {
+      matt.posx -=30;
     }
   }
 }
