@@ -3,12 +3,14 @@ package com.prontab.goddamn;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 
+// Game class
 public class GodDamn extends BasicGame {
   
   public GodDamn() {
     super("God Damn");
   }
 
+  // Main method instantiates game loop and stuff
   public static void main(String[] arguments) {
     try {
       AppGameContainer app = new AppGameContainer(new GodDamn());
@@ -21,23 +23,21 @@ public class GodDamn extends BasicGame {
 }
   
   Matt matt;
-  Text text;
   
   public void init(GameContainer c) throws SlickException {
+    // Instantiate matt and text
     matt = new Matt(50, 50);
-    text = new Text("", 220, 80, 70);
   }
   
   public void render(GameContainer c, Graphics g) throws SlickException {
     g.setColor(Color.white);
     g.fill(new Rectangle(0, 0, 640, 480));
-    matt.draw();
-    text.draw(g);
+    matt.draw(g);
   }
 
   public void update(GameContainer c, int delta) throws SlickException{
     handleinput(c);
-    text.update(delta);
+    matt.update(delta);
   }
   private void handleinput(GameContainer c) throws SlickException{
     Input input = c.getInput();
@@ -46,15 +46,12 @@ public class GodDamn extends BasicGame {
     }
     if (input.isKeyDown(Input.KEY_S)) {
       matt.stand();
-      text.reset();
     }
     if (input.isKeyDown(Input.KEY_Q)) {
-      matt.shrug();
-      text.settext("I dunno");
+      matt.shrug("I dunno.");
     }
     if (input.isKeyDown(Input.KEY_T)) {
-      matt.talk();
-      text.settext("Can we go get a drink now?");
+      matt.talk("What's this, a snake?");
     }
   }
 }

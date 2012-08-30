@@ -1,12 +1,14 @@
 package com.prontab.goddamn;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Graphics;
+
+import com.prontab.goddamn.Text;
+import com.prontab.goddamn.Action;
 
 public class Matt {
   
@@ -14,69 +16,47 @@ public class Matt {
   public int posx, posy;
   Map<String, int[]> frameref;
   SpriteSheet sheet;
+  Text speech;
+  Action action;
   
   public Matt(int x, int y) {
     posx = x;
     posy = y;
-    frameref = loadFrameref();
+    anim = new Animation();
+    speech = new Text("", 220, 80, 70);
     try {
-      sheet = new SpriteSheet("assets/sprites/matt.png", 77, 123, 5);
-      anim = act("stand", true, 0, 0);
+      action = new Action(anim, speech);
+      action.act("stand", true, 0, 0);
+      
     }
     catch(SlickException e) {
       e.printStackTrace();
     }
   }
   
-  public void draw() {
-    anim.draw(posx, posy);
+  public void draw(Graphics g) {
+    action.anim.draw(posx, posy);
+    speech.draw(g);
   }
   
-  private Animation act(String action, boolean repeat, int keyframe, int keyframerepeats) {
-    Animation animate = new Animation();
-    animate.setAutoUpdate(true);
-    Image image;
-    int length;
-    for (int frame : frameref.get(action)){
-      
-      length = 150;
-      if (keyframe != 0 && frame == keyframe && keyframerepeats > 0) {
-        length = 450 * keyframerepeats;
-      }
-      try {
-        image = sheet.getSprite(frame, 0);
-        image.setFilter(Image.FILTER_NEAREST);
-        animate.addFrame(image.getScaledCopy(3), length);
-      }
-      catch(SlickException e){
-        e.printStackTrace();
-      }
-    }
-    return animate;
+  public void update(int delta){
+    action.update(delta);
   }
   
-  public void talk() {
-    anim = act("talk", true, 0, 0);
+  public void talk(String line) {
+    action.act("talk", true, 0, 0);
+    speech.settext(line);
+    
   }
   
-  public void shrug() {
-    anim = act("shrug", true, 3, 3);
+  public void shrug(String line) {
+    action.act("shrug", true, 3, 3);
     anim.setPingPong(true);
     anim.setLooping(false);
+    speech.settext(line);
   }
   
   public void stand() {
-    anim = act("stand", true, 0, 0);
-  }
-  
-  private HashMap<String, int[]> loadFrameref() {
-    HashMap<String, int[]> hash = new HashMap<String, int[]>();
-    int[] standlist = {0};
-    hash.put("stand", standlist);
-    int[] talklist = {0, 1};
-    hash.put("talk", talklist);
-    int[] shruglist = {0, 2, 3};
-    hash.put("shrug", shruglist);
-    return hash;
+    action.act("stand", true, 0, 0);
   }
 }
