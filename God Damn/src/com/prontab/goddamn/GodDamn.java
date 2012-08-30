@@ -25,7 +25,6 @@ public class GodDamn extends BasicGame {
   Matt matt;
   
   public void init(GameContainer c) throws SlickException {
-    // Instantiate matt and text
     matt = new Matt(50, 50);
   }
   
@@ -52,6 +51,9 @@ public class GodDamn extends BasicGame {
     }
     if (input.isKeyDown(Input.KEY_T)) {
       matt.talk("What's this, a snake?");
+    }
+    if (input.isKeyPressed(Input.KEY_M)) {
+      matt.posx +=30;
     }
   }
 }

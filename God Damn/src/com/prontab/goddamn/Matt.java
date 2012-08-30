@@ -22,10 +22,9 @@ public class Matt {
   public Matt(int x, int y) {
     posx = x;
     posy = y;
-    anim = new Animation();
-    speech = new Text("", 220, 80, 70);
+    speech = new Text("", 180, 20, 80);
     try {
-      action = new Action(anim, speech);
+      action = new Action(speech);
       action.act("stand", true, 0, 0);
       
     }
@@ -40,7 +39,7 @@ public class Matt {
   }
   
   public void update(int delta){
-    action.update(delta);
+    action.update(posx, posy, delta);
   }
   
   public void talk(String line) {
@@ -51,12 +50,13 @@ public class Matt {
   
   public void shrug(String line) {
     action.act("shrug", true, 3, 3);
-    anim.setPingPong(true);
-    anim.setLooping(false);
+    action.anim.setPingPong(true);
+    action.anim.setLooping(false);
     speech.settext(line);
   }
   
   public void stand() {
     action.act("stand", true, 0, 0);
+    speech.settext("");
   }
 }

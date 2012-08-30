@@ -6,13 +6,13 @@ import org.newdawn.slick.Graphics;
 public class Text {
   
   String printline, line;
-  int posx, posy, updatefreq, length;
+  int posx, posy, shiftx, shifty, updatefreq, length;
   int time, lineindex;
   
   public Text(String text, int x, int y, int freq){
+    shiftx = x;
+    shifty = y;
     reset();
-    posx = x;
-    posy = y;
     updatefreq = freq;
     if (text.length() == 0){
       return;
@@ -22,6 +22,7 @@ public class Text {
       return;
     }
   }
+  
   
   public void settext(String text){
     reset();
@@ -41,7 +42,9 @@ public class Text {
     time = 0;
   }
   
-  public boolean update(int delta){
+  public boolean update(int x, int y, int delta){
+    posx = x + shiftx;
+    posy = y + shifty;
     if(printline.length() == line.length()){
       return false;
     }

@@ -12,22 +12,29 @@ import com.prontab.goddamn.Text;
 
 public class Action {
   public Animation anim;
-  Text words;
+  public Text speech;
   
   Map<String, int[]> frameref;
   SpriteSheet sheet;
+  Boolean queue;
   
-  public Action(Animation animation, Text text) throws SlickException{
-    anim = animation;
-    words = text;
+  public Action(Text text) throws SlickException{
+    queue = false;
+    
+    anim = new Animation();
+    speech = text;
     
     frameref = loadFrameref();
     
     sheet = new SpriteSheet("assets/sprites/matt.png", 77, 123, 5);
 
   }
-  public void update(int delta){
-    if (words.update(delta)){
+  public void update(int x, int y, int delta){
+    if (speech.update(x, y, delta)){
+      anim.update(delta);
+    } else if (queue) {
+      //anim = queue;
+      queue = false;
       anim.update(delta);
     }
   }
