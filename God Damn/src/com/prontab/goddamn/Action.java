@@ -13,9 +13,9 @@ import com.prontab.goddamn.Text;
 public class Action {
   public Animation anim;
   public Text speech;
+  public SpriteSheet sheet;
   
   Map<String, int[]> frameref;
-  SpriteSheet sheet;
   Boolean queue;
   
   public Action(Text text) throws SlickException{

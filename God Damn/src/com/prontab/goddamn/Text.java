@@ -1,7 +1,9 @@
 package com.prontab.goddamn;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class Text {
   
@@ -10,8 +12,8 @@ public class Text {
   int time, lineindex;
   
   public Text(String text, int x, int y, int freq){
-    shiftx = x;
-    shifty = y;
+    posx = x;
+    posy = y;
     reset();
     updatefreq = freq;
     if (text.length() == 0){
@@ -42,12 +44,20 @@ public class Text {
     time = 0;
   }
   
-  private int[] textoffset(int x, int y, int length, int height, int spritewidth){
+  // Get width and height of text in 2 element array
+  /*private int[] getDimensions(){
+    return new int[2];
+  }
+  */
+  
+  // Work out how to offset dialogue so it stays on screen
+  private int[] getOffset(int x, int y, int length, int height, int spritewidth){
     int[] offset = new int[2];
     int centrex = Global.winx / 2;
-    int centrey = Global.winy / 2;
+    x = x + (spritewidth/2);
+    System.out.println(x);
     if (x > centrex){
-      offset[0] = -length - Global.padding;
+      offset[0] = - Global.padding - length;
     } else {
       offset[0] = spritewidth + Global.padding;
     }
@@ -64,8 +74,8 @@ public class Text {
   }
   
   public boolean update(int x, int y, int delta){
-    posx = x + shiftx;
-    posy = y + shifty;
+    posx = x;
+    posy = y;
     if(printline.length() == line.length()){
       return false;
     }
@@ -77,10 +87,17 @@ public class Text {
     }      
     return true;
   }
-  
-  public void draw(Graphics g){
+  // Draws at calculated offset, currently takes an image for the sprite width - this
+  // May or may not be a problem at a later date. Be aware.
+  public void draw(Graphics g, int x, int y, Image sprite){
+    int[] offset;
+    Font font;
     g.setColor(Color.black);
-    g.drawString(printline, posx, posy);
+    font = g.getFont();
+    
+    offset = getOffset(x, y, font.getWidth(line), font.getHeight(line), sprite.getWidth());
+    
+    g.drawString(printline, posx + offset[0], posy + offset[1]);
   }
 
 }
