@@ -51,28 +51,24 @@ public class Text {
   */
   
   // Work out how to offset dialogue so it stays on screen
-  private int[] getOffset(int x, int y, int length, int height, int spritewidth){
-    int[] offset = new int[2];
+  private int getOffsetx(int x, int length, int spritewidth){
+    int offset; 
     int centrex = Global.winx / 2;
-    x = x + (spritewidth/2);
-    System.out.println(x);
+    int halfwidth = spritewidth/2;
+    x = x + halfwidth;
     if (x > centrex){
-      offset[0] = - Global.padding - length;
+      offset = - Global.padding - length;
     } else {
-      offset[0] = spritewidth + Global.padding;
+      offset = spritewidth + Global.padding;
     }
-    if (y <= 0){
-      offset[1] = -y + Global.padding;
-    } else {
-      int overlap = height + y - Global.winy;
-      if (overlap > 0) {
-        offset[1] = -overlap - Global.padding;
-      }
-    }
-    offset[1] = - Global.padding;
     return offset;
   }
   
+  // Placeholder always returns 0
+  private int getOffsety(int y, int height){
+    int offset = 0;
+    return offset;
+  }
   public boolean update(int x, int y, int delta){
     posx = x;
     posy = y;
@@ -90,14 +86,24 @@ public class Text {
   // Draws at calculated offset, currently takes an image for the sprite width - this
   // May or may not be a problem at a later date. Be aware.
   public void draw(Graphics g, int x, int y, Image sprite){
-    int[] offset;
+    int offsetx, offsety;
+    float drawx, drawy;
     Font font;
     g.setColor(Color.black);
     font = g.getFont();
     
-    offset = getOffset(x, y, font.getWidth(line), font.getHeight(line), sprite.getWidth());
-    
-    g.drawString(printline, posx + offset[0], posy + offset[1]);
+    offsetx = getOffsetx(x, font.getWidth(line), sprite.getWidth() * 3 /* image is upscaled 3 times */);
+    // FIXME - fudge factor //
+    drawx = (float) posx + (Global.fudge * offsetx);
+    if (y <= Global.padding) {
+      drawy = Global.padding;
+    } else if (y >= Global.winy - Global.padding) {
+      drawy = Global.winy - Global.padding - font.getLineHeight();
+    } else {
+      offsety = getOffsety(y, font.getLineHeight());
+      drawy = (float) posy + offsety;
+    }
+    g.drawString(printline, drawx, drawy); 
   }
 
 }

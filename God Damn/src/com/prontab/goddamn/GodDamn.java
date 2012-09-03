@@ -52,11 +52,17 @@ public class GodDamn extends BasicGame {
     if (input.isKeyDown(Input.KEY_T)) {
       matt.talk("What's this, a snake?");
     }
-    if (input.isKeyPressed(Input.KEY_M)) {
+    if (input.isKeyPressed(Input.KEY_L)) {
       matt.posx +=30;
     }
-    if (input.isKeyPressed(Input.KEY_N)) {
+    if (input.isKeyPressed(Input.KEY_H)) {
       matt.posx -=30;
+    }
+    if (input.isKeyPressed(Input.KEY_J)) {
+      matt.posy +=30;
+    }
+    if (input.isKeyPressed(Input.KEY_K)) {
+      matt.posy -=30;
     }
   }
 }
