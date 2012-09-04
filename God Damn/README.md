@@ -16,9 +16,12 @@ WHO KNOWS.
 In it's current state, the keybindings are as follows:
 
 * s: Stand animation (i.e. do nothing)
-* t: Talk animation (I will just jabber on)
+* t: Talk animation (with hardcoded text)
 * q: Shrug animation (doesn't quite pingpong like I want it to yet)
+* hjkl: Move character 30px in vim keybinding directions (testing purposes)
 * Esc: Exit.
+
+Animation looping is currently dictated by speech length.
 
 The classpath rubbish is all in the .classpath file, so you should be able to
 simply import the project in to Eclipse (ew... sorry) and download Slick from
@@ -34,3 +37,6 @@ I will probably un-abstract out a little more of the animation looping and write
 a few more helpers and then work out the best way to create a conversation menu
 and script animations with dialogue choices and progressions. This may be where
 the JRuby comes in. 
+
+Animation queueing will probably come next so that several actions can be queued
+one after the other.
