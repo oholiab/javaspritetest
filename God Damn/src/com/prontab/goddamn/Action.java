@@ -1,6 +1,7 @@
 package com.prontab.goddamn;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.newdawn.slick.Animation;
@@ -16,11 +17,14 @@ public class Action {
   public SpriteSheet sheet;
   
   Map<String, int[]> frameref;
-  Boolean queue;
+  Map<Animation, String> queue;
   
   public Action(Text text) throws SlickException{
-    queue = false;
-    
+    queue = new LinkedHashMap<Animation, String>(){
+      protected boolean removeEldestEntry(Map.Entry<Animation, String> eldest){
+        return true;
+      }
+    };
     anim = new Animation();
     speech = text;
     
@@ -29,14 +33,18 @@ public class Action {
     sheet = new SpriteSheet("assets/sprites/matt.png", 77, 123, 5);
 
   }
+  public void enqueue(Animation animation, String speech){
+    queue.put(animation, speech);
+  }
+  
   // TODO: create queue array for queuing next action
   // TODO: create animation padding so spoken text hangs around for a while and animation continues
   public void update(int x, int y, int delta){
     if (speech.update(x, y, delta)){
       anim.update(delta);
-    } else if (queue) {
+    } else {
       //anim = queue;
-      queue = false;
+      queue.removeEldestEntry();
       anim.update(delta);
     }
   }
@@ -50,6 +58,8 @@ public class Action {
       
       // length is the length each frame is shown for
       length = 150;
+      
+      // I don't really know what this code is doing.
       if (keyframe != 0 && frame == keyframe && keyframerepeats > 0) {
         length = 450 * keyframerepeats;
       }

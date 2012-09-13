@@ -38,6 +38,8 @@ public class GodDamn extends BasicGame {
     handleinput(c);
     matt.update(delta);
   }
+  
+  /* All sample inputs for testing and debugging purposes */
   private void handleinput(GameContainer c) throws SlickException{
     Input input = c.getInput();
     if (input.isKeyDown(Input.KEY_ESCAPE)) {
