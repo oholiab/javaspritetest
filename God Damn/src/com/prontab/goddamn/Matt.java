@@ -13,6 +13,7 @@ public class Matt {
   
   public Animation anim;
   public int posx, posy;
+  public int targetx, targety;
   Map<String, int[]> frameref;
   Text speech;
   Action action;
@@ -37,7 +38,33 @@ public class Matt {
   }
   
   public void update(int delta){
+    move(delta);
     action.update(posx, posy, delta);
+  }
+  
+  public void move(int delta) {
+	if(targetx != posx | targety != posy) { //unless position and target position are the same
+      int diffx, diffy;
+      diffx = targetx - posx;
+      diffy = targety - posy;
+      if(diffx > 0) {
+    	posx += Global.vel * delta;
+      }
+      if(diffy > 0) {
+    	posy += Global.vel * delta;
+      }
+      if(diffx < 0) {
+    	posx -= Global.vel * delta;
+      }
+      if(diffy < 0) {
+    	posy -= Global.vel * delta;
+      }
+	}
+  }
+  
+  public void moveTo(int targx, int targy) {
+	targetx = targx;
+	targety = targy;
   }
   
   public void talk(String line) {

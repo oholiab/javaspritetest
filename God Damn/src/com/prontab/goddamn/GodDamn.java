@@ -64,5 +64,8 @@ public class GodDamn extends BasicGame {
     if (input.isKeyPressed(Input.KEY_K)) {
       matt.posy -=30;
     }
+    if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+      matt.moveTo(input.getAbsoluteMouseX(), input.getAbsoluteMouseY());
+    }
   }
 }
